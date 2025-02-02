@@ -10,6 +10,14 @@ const ContextProvider = createContext<GlobalContextType>({
     isAuthUser: undefined,
     setIsAuthUser: () => {},
   },
+  textRecordingObject: {
+    text: "",
+    setText: () => {},
+    isListening: false,
+    setIsListening: () => {},
+  },
+  noteIsRecorded: false,
+  setNoteIsRecorded: () => {},
 });
 
 export default function GlobalCOntextProvider({
@@ -19,6 +27,12 @@ export default function GlobalCOntextProvider({
 }) {
   const [isAuthUser, setIsAuthUser] = useState<boolean | undefined>(false);
   const [user, setUser] = useState<userType | null>(null);
+
+  const [noteIsRecorded, setNoteIsRecorded] = useState(false);
+
+  // text recording states ---------------------------
+  const [text, setText] = useState("");
+  const [isListening, setIsListening] = useState(false);
 
   const router = useRouter();
 
@@ -40,7 +54,12 @@ export default function GlobalCOntextProvider({
   // =====================================================
   return (
     <ContextProvider.Provider
-      value={{ userObject: { user, setUser, isAuthUser, setIsAuthUser } }}
+      value={{
+        userObject: { user, setUser, isAuthUser, setIsAuthUser },
+        textRecordingObject: { text, setText, isListening, setIsListening },
+        noteIsRecorded,
+        setNoteIsRecorded,
+      }}
     >
       {children}
     </ContextProvider.Provider>

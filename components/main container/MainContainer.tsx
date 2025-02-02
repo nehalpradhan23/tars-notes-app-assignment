@@ -3,10 +3,11 @@ import SearchBar from "./SearchBar";
 import { BsSliders } from "react-icons/bs";
 import Card from "./Card";
 import CardsContainer from "./CardsContainer";
+import AddNote from "./AddNote/AddNote";
 
 const MainContainer = () => {
   return (
-    <div className="w-full px-4">
+    <div className="w-full px-4 flex flex-col">
       <div className="flex gap-3">
         <SearchBar />
         {/* sort */}
@@ -17,6 +18,8 @@ const MainContainer = () => {
       </div>
       {/* cards ------------------------ */}
       <CardsContainer />
+      {/* ======================================= */}
+      <AddNote />
     </div>
   );
 };
