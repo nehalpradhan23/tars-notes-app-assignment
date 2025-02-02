@@ -1,10 +1,23 @@
-"use state";
+"use client";
+import { useGlobalContext } from "@/context/AppContext";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { RiHome2Fill } from "react-icons/ri";
 
 const Sidebar = () => {
+  const {
+    userObject: { user, setUser },
+  } = useGlobalContext();
+
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+    setUser(JSON.parse(user!));
+  }, []);
+
+  console.log("=============", user);
+
+  // ==========================
   return (
     <div className="flex flex-col p-4 rounded-3xl border w-[350px]">
       <div className="flex items-center gap-2 text-xl font-bold">
@@ -23,7 +36,7 @@ const Sidebar = () => {
         </div>
       </div>
       {/* ---------------------- */}
-      <div className="">username</div>
+      <div className="">{user?.name}</div>
     </div>
   );
 };

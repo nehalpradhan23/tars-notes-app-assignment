@@ -1,33 +1,49 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { GlobalContextType, userType } from "@/types/types";
 
-const ContextProvider = createContext({});
+const ContextProvider = createContext<GlobalContextType>({
+  userObject: {
+    user: null,
+    setUser: () => {},
+    isAuthUser: undefined,
+    setIsAuthUser: () => {},
+  },
+});
 
 export default function GlobalCOntextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [isAuthUser, setIsAuthUser] = useState(false);
+  const [isAuthUser, setIsAuthUser] = useState<boolean | undefined>(false);
+  const [user, setUser] = useState<userType | null>(null);
 
   const router = useRouter();
+
   // authenticate ---------------------------
   useEffect(() => {
-    if (Cookies.get("token") !== undefined) {
+    const token = localStorage.getItem("token");
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (token) {
       setIsAuthUser(true);
-      // const userData: any = JSON.parse(localStorage.getItem("user")!) || {};
-      // setUser(userData);
+      // setUser(currentUser)
+      router.push("/");
     } else {
       setIsAuthUser(false);
       router.push("/login");
     }
-  }, [Cookies]);
+  }, []);
 
   // =====================================================
   return (
-    <ContextProvider.Provider value={{}}>{children}</ContextProvider.Provider>
+    <ContextProvider.Provider
+      value={{ userObject: { user, setUser, isAuthUser, setIsAuthUser } }}
+    >
+      {children}
+    </ContextProvider.Provider>
   );
 }
 
