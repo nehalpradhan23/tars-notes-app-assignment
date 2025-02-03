@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import { GlobalContextType, userType } from "@/types/types";
+import { GlobalContextType, noteType, userType } from "@/types/types";
 
 const ContextProvider = createContext<GlobalContextType>({
   userObject: {
@@ -22,6 +22,10 @@ const ContextProvider = createContext<GlobalContextType>({
     newNoteModalOpen: false,
     setNewNoteModalOpen: () => {},
   },
+  allUserNotesObject: {
+    allUserNotes: [],
+    setAllUserNotes: () => {},
+  },
 });
 
 export default function GlobalCOntextProvider({
@@ -34,6 +38,7 @@ export default function GlobalCOntextProvider({
 
   const [noteIsRecorded, setNoteIsRecorded] = useState(false);
   const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
+  const [allUserNotes, setAllUserNotes] = useState<noteType[] | []>([]);
 
   // text recording states ---------------------------
   const [text, setText] = useState("");
@@ -65,6 +70,7 @@ export default function GlobalCOntextProvider({
         noteIsRecorded,
         setNoteIsRecorded,
         newNoteModalObject: { newNoteModalOpen, setNewNoteModalOpen },
+        allUserNotesObject: { allUserNotes, setAllUserNotes },
       }}
     >
       {children}

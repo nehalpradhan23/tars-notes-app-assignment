@@ -17,10 +17,23 @@ export interface GlobalContextType {
     newNoteModalOpen: boolean;
     setNewNoteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   };
+  allUserNotesObject: {
+    allUserNotes: noteType[];
+    setAllUserNotes: React.Dispatch<React.SetStateAction<noteType[] | []>>;
+  };
 }
 
 export interface userType {
   email: string;
   name: string;
   _id: string;
+}
+
+export interface noteType {
+  userId: string;
+  title: string;
+  noteContent: string;
+  isFavorite: boolean;
+  noteIsRecorded: boolean;
+  creationDate: string;
 }

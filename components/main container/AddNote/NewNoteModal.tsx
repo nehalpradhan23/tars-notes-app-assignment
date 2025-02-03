@@ -1,5 +1,6 @@
 "use client";
 import { useGlobalContext } from "@/context/AppContext";
+import useFetchNotes from "@/hooks/useFetchNotes";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
@@ -14,6 +15,8 @@ const NewNoteModal = () => {
   const [noteContent, setNoteContent] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { getUserNotes } = useFetchNotes();
 
   const {
     userObject: { user },
@@ -58,6 +61,7 @@ const NewNoteModal = () => {
         toast("Note added");
         setNewNoteModalOpen(false);
         setNoteIsRecorded(false);
+        getUserNotes();
       }
     } catch (error) {
       console.log(error);

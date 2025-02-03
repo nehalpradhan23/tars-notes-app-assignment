@@ -1,17 +1,15 @@
 import React from "react";
 import Card from "./Card";
+import { noteType } from "@/types/types";
+import useFetchNotes from "@/hooks/useFetchNotes";
 
-const CardsContainer = () => {
+const CardsContainer = ({ notes }: { notes: noteType[] }) => {
   return (
     <div className="flex flex-1 overflow-y-auto">
       <div className="flex gap-4 mt-5 flex-wrap overflow-y-scroll w-full">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {notes?.map((note, index) => (
+          <Card note={note} />
+        ))}
       </div>
     </div>
   );

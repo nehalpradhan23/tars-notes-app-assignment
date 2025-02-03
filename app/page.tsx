@@ -3,13 +3,18 @@ import NewNoteModal from "@/components/main container/AddNote/NewNoteModal";
 import MainContainer from "@/components/main container/MainContainer";
 import Sidebar from "@/components/Sidebar";
 import { useGlobalContext } from "@/context/AppContext";
+import axios from "axios";
+import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   const {
     newNoteModalObject: { newNoteModalOpen },
     textRecordingObject: { isListening },
+    userObject: { user },
   } = useGlobalContext();
+  // console.log(user);
+
   // =================================
   return (
     <div className="flex relative">
@@ -19,7 +24,7 @@ export default function Home() {
           Voice recording. Start speaking. Press stop to finish.
         </div>
       )}
-      <div className="flex h-screen p-4">
+      <div className="flex w-full h-screen p-4">
         <Sidebar />
         <MainContainer />
       </div>
