@@ -40,7 +40,7 @@ const MainContainer = () => {
     }
   }, [user]);
 
-  console.log("user notes", allUserNotes);
+  // console.log("user notes", allUserNotes);
 
   // ========================================
   return (

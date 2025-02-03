@@ -6,6 +6,7 @@ import { BiCopyAlt } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import { MdDelete, MdDriveFileRenameOutline } from "react-icons/md";
 import { RiText } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 const Card = ({ note }: { note: noteType }) => {
   const formatTimestamp = (timestamp: number): string => {
@@ -24,6 +25,8 @@ const Card = ({ note }: { note: noteType }) => {
   const {
     deleteNoteModalObject: { setDeleteNoteModalOpen },
     noteToDeleteObject: { setNoteToDelete },
+    editNoteModalObject: { setEditNoteModalOpen },
+    currentNoteToEditObject: { setCurrentNoteToEdit },
   } = useGlobalContext();
 
   const handleNoteDelete = (
@@ -35,9 +38,18 @@ const Card = ({ note }: { note: noteType }) => {
     setDeleteNoteModalOpen(true);
   };
 
+  // ==================================================
+  const handleEditNote = (note: noteType) => {
+    // console.log(note);
+    setCurrentNoteToEdit(note);
+    setEditNoteModalOpen(true);
+  };
   // =========================================
   return (
-    <div className="flex flex-col border hover:border-black rounded-2xl p-5 w-[350px] h-[400px] hover:bg-gray-50 cursor-pointer">
+    <div
+      onClick={() => handleEditNote(note)}
+      className="flex flex-col border hover:border-black rounded-2xl p-5 w-[350px] h-[400px] hover:bg-gray-50 cursor-pointer"
+    >
       <div className="flex flex-col flex-1 gap-3">
         {/* time ------------------- */}
         <div className="flex items-center justify-between">
@@ -64,7 +76,14 @@ const Card = ({ note }: { note: noteType }) => {
       </div>
       {/* buttons ------------------------- */}
       <div className="flex items-end justify-end *:text-2xl gap-1 *:text-slate-400 *:p-2">
-        <button className="hover:bg-gray-200 rounded-full">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigator.clipboard.writeText(note?.noteContent);
+            toast("Note copied");
+          }}
+          className="hover:bg-gray-200 rounded-full"
+        >
           <BiCopyAlt />
         </button>
         <button className="hover:bg-gray-200 rounded-full">

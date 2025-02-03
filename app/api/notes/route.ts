@@ -86,3 +86,35 @@ export async function DELETE(request: Request) {
     });
   }
 }
+
+export async function PUT(req: Request) {
+  try {
+    const { id, title, noteContent, isFavorite } = await req.json();
+    await connectDB();
+
+    const updateNote = await SingleNote.findByIdAndUpdate(
+      { _id: id },
+      {
+        title,
+        noteContent,
+        isFavorite,
+      }
+    );
+
+    if (updateNote) {
+      return NextResponse.json({
+        success: true,
+        note: updateNote,
+        message: "Note updated successfully",
+      });
+    } else {
+      return NextResponse.json({
+        success: false,
+        message: "Failed to update note",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ success: false, error });
+  }
+}

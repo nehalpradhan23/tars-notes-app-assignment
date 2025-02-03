@@ -8,7 +8,7 @@ const CardsContainer = ({ notes }: { notes: noteType[] }) => {
     <div className="flex flex-1 overflow-y-auto">
       <div className="flex gap-4 mt-5 flex-wrap overflow-y-scroll w-full">
         {notes?.map((note, index) => (
-          <Card note={note} />
+          <Card note={note} key={index} />
         ))}
       </div>
     </div>

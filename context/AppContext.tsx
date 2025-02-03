@@ -34,6 +34,14 @@ const ContextProvider = createContext<GlobalContextType>({
     noteToDelete: null,
     setNoteToDelete: () => {},
   },
+  editNoteModalObject: {
+    editNoteModalOpen: false,
+    setEditNoteModalOpen: () => {},
+  },
+  currentNoteToEditObject: {
+    currentNoteToEdit: null,
+    setCurrentNoteToEdit: () => {},
+  },
 });
 
 export default function GlobalCOntextProvider({
@@ -47,6 +55,12 @@ export default function GlobalCOntextProvider({
   const [noteIsRecorded, setNoteIsRecorded] = useState(false);
   const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
   const [allUserNotes, setAllUserNotes] = useState<noteType[] | []>([]);
+
+  // edit note -----------------------------
+  const [editNoteModalOpen, setEditNoteModalOpen] = useState(false);
+  const [currentNoteToEdit, setCurrentNoteToEdit] = useState<noteType | null>(
+    null
+  );
 
   // delete note ----------------------
   const [deleteNoteModalOpen, setDeleteNoteModalOpen] = useState(false);
@@ -85,6 +99,8 @@ export default function GlobalCOntextProvider({
         allUserNotesObject: { allUserNotes, setAllUserNotes },
         deleteNoteModalObject: { deleteNoteModalOpen, setDeleteNoteModalOpen },
         noteToDeleteObject: { noteToDelete, setNoteToDelete },
+        editNoteModalObject: { editNoteModalOpen, setEditNoteModalOpen },
+        currentNoteToEditObject: { currentNoteToEdit, setCurrentNoteToEdit },
       }}
     >
       {children}

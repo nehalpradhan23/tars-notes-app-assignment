@@ -29,6 +29,14 @@ export interface GlobalContextType {
     noteToDelete: noteType | null;
     setNoteToDelete: React.Dispatch<React.SetStateAction<noteType | null>>;
   };
+  editNoteModalObject: {
+    editNoteModalOpen: boolean;
+    setEditNoteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  currentNoteToEditObject: {
+    currentNoteToEdit: noteType | null;
+    setCurrentNoteToEdit: React.Dispatch<React.SetStateAction<noteType | null>>;
+  };
 }
 
 export interface userType {

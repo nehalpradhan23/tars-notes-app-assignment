@@ -5,12 +5,14 @@ import Sidebar from "@/components/Sidebar";
 import { useGlobalContext } from "@/context/AppContext";
 import { ToastContainer } from "react-toastify";
 import DeleteNoteConfirmModal from "@/components/modals/DeleteNoteConfirmModal";
+import EditNoteModal from "@/components/modals/EditNoteModal";
 
 export default function Home() {
   const {
     newNoteModalObject: { newNoteModalOpen },
     textRecordingObject: { isListening },
     deleteNoteModalObject: { deleteNoteModalOpen },
+    editNoteModalObject: { editNoteModalOpen },
   } = useGlobalContext();
   // console.log(user);
 
@@ -29,6 +31,7 @@ export default function Home() {
       </div>
       {newNoteModalOpen && <NewNoteModal />}
       {deleteNoteModalOpen && <DeleteNoteConfirmModal />}
+      {editNoteModalOpen && <EditNoteModal />}
     </div>
   );
 }
