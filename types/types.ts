@@ -13,6 +13,10 @@ export interface GlobalContextType {
   };
   noteIsRecorded: boolean;
   setNoteIsRecorded: React.Dispatch<React.SetStateAction<boolean>>;
+  newNoteModalObject: {
+    newNoteModalOpen: boolean;
+    setNewNoteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 }
 
 export interface userType {

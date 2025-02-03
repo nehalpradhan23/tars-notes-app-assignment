@@ -18,6 +18,10 @@ const ContextProvider = createContext<GlobalContextType>({
   },
   noteIsRecorded: false,
   setNoteIsRecorded: () => {},
+  newNoteModalObject: {
+    newNoteModalOpen: false,
+    setNewNoteModalOpen: () => {},
+  },
 });
 
 export default function GlobalCOntextProvider({
@@ -29,6 +33,7 @@ export default function GlobalCOntextProvider({
   const [user, setUser] = useState<userType | null>(null);
 
   const [noteIsRecorded, setNoteIsRecorded] = useState(false);
+  const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
 
   // text recording states ---------------------------
   const [text, setText] = useState("");
@@ -59,6 +64,7 @@ export default function GlobalCOntextProvider({
         textRecordingObject: { text, setText, isListening, setIsListening },
         noteIsRecorded,
         setNoteIsRecorded,
+        newNoteModalObject: { newNoteModalOpen, setNewNoteModalOpen },
       }}
     >
       {children}
