@@ -25,9 +25,9 @@ const useNoteDelete = () => {
       if (response.data.success) {
         setDeleteNoteModalOpen(false);
         getUserNotes();
-        toast("Note deleted successfully");
+        toast.success("Note deleted successfully");
       } else {
-        toast(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.log("error deleting note", error);

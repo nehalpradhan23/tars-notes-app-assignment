@@ -1,11 +1,15 @@
 "use client";
 import { useGlobalContext } from "@/context/AppContext";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { RiHome2Fill } from "react-icons/ri";
 
 const Sidebar = () => {
+  const [showLogout, setShowLogout] = useState(false);
+  const router = useRouter();
+
   const {
     userObject: { user, setUser },
   } = useGlobalContext();
@@ -15,6 +19,15 @@ const Sidebar = () => {
     setUser(JSON.parse(user!));
   }, []);
 
+  const handleShowLogout = () => {
+    setShowLogout(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentUser");
+    router.push("/login");
+  };
   // console.log("=============", user);
 
   // ==========================
@@ -35,8 +48,25 @@ const Sidebar = () => {
           <span>Favourites</span>
         </div>
       </div>
-      {/* ---------------------- */}
-      <div className="">{user?.name}</div>
+      {/* logout ---------------------- */}
+      {showLogout && (
+        <div className="border flex flex-col bg-gray-200 items-center py-3 gap-4 rounded-2xl mb-4">
+          <span className="text-lg font-bold">Confirm logout?</span>
+          <div className="flex gap-6 *:px-3 *:py-1 *:border *:border-black *:rounded-2xl">
+            <button onClick={handleLogout}>Log out</button>
+            <button onClick={() => setShowLogout(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+      <button
+        onClick={handleShowLogout}
+        className="flex items-center justify-center gap-2"
+      >
+        <span className="px-2 py-0.5 bg-black rounded-full text-white">
+          {user?.name[0].toUpperCase()}
+        </span>
+        {user?.name}
+      </button>
     </div>
   );
 };

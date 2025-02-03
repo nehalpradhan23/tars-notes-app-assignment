@@ -42,6 +42,10 @@ const ContextProvider = createContext<GlobalContextType>({
     currentNoteToEdit: null,
     setCurrentNoteToEdit: () => {},
   },
+  searchNoteObject: {
+    searchNoteText: "",
+    setSearchNoteText: () => {},
+  },
 });
 
 export default function GlobalCOntextProvider({
@@ -55,6 +59,7 @@ export default function GlobalCOntextProvider({
   const [noteIsRecorded, setNoteIsRecorded] = useState(false);
   const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
   const [allUserNotes, setAllUserNotes] = useState<noteType[] | []>([]);
+  const [searchNoteText, setSearchNoteText] = useState("");
 
   // edit note -----------------------------
   const [editNoteModalOpen, setEditNoteModalOpen] = useState(false);
@@ -75,7 +80,7 @@ export default function GlobalCOntextProvider({
   // authenticate ---------------------------
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const currentUser = localStorage.getItem("currentUser");
+    // const currentUser = localStorage.getItem("currentUser");
 
     if (token) {
       setIsAuthUser(true);
@@ -101,6 +106,7 @@ export default function GlobalCOntextProvider({
         noteToDeleteObject: { noteToDelete, setNoteToDelete },
         editNoteModalObject: { editNoteModalOpen, setEditNoteModalOpen },
         currentNoteToEditObject: { currentNoteToEdit, setCurrentNoteToEdit },
+        searchNoteObject: { searchNoteText, setSearchNoteText },
       }}
     >
       {children}

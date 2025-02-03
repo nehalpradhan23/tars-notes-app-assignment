@@ -62,7 +62,7 @@ const EditNoteModal = () => {
       // console.log(response);
 
       if (response.data.success) {
-        toast("Note updated");
+        toast.success("Note updated");
         setNoteIsRecorded(false);
         getUserNotes();
       }
@@ -95,9 +95,9 @@ const EditNoteModal = () => {
             <button
               onClick={() => {
                 if (isFavorite) {
-                  toast("Removed from favorite");
+                  toast.success("Removed from favorite");
                 } else {
-                  toast("Added to favorite");
+                  toast.success("Added to favorite");
                 }
                 setIsFavorite(!isFavorite);
               }}

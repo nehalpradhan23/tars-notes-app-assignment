@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { BsSliders } from "react-icons/bs";
 import Card from "./Card";
@@ -7,48 +7,93 @@ import AddNote from "./AddNote/AddNote";
 import { useGlobalContext } from "@/context/AppContext";
 import useFetchNotes from "@/hooks/useFetchNotes";
 import { FaSpinner } from "react-icons/fa";
+import { noteType } from "@/types/types";
+import { toast } from "react-toastify";
 
 const MainContainer = () => {
   const {
     userObject: { user },
-    allUserNotesObject: { allUserNotes, setAllUserNotes },
+    allUserNotesObject: { allUserNotes },
+    searchNoteObject: { searchNoteText },
   } = useGlobalContext();
 
   const { getUserNotes, loading } = useFetchNotes();
+  const [sortOldestToNewest, setSortOldestToNewest] = useState(false);
+  const [sortedNotes, setSortedNotes] = useState<noteType[] | []>([]);
+  const [filteredNotes, setFilteredNotes] = useState<noteType[] | []>([]);
 
-  // console.log(user?._id);
-  // fetch user notes ===============================
-  // const getUserNotes = async () => {
-  //   try {
-  //     const response = await fetch(`/api/notes?userId=${user?._id}`);
+  // sort notes ==================================================================================================
+  useEffect(() => {
+    // show newest to oldest
+    if (sortOldestToNewest) {
+      const sortedRecentFirst = [...allUserNotes].sort(
+        (a, b) => Number(b.creationDate) - Number(a.creationDate)
+      );
+      setSortedNotes(sortedRecentFirst);
+    } else {
+      const sortedOldestFirst = [...allUserNotes].sort(
+        (a, b) => Number(a.creationDate) - Number(b.creationDate)
+      );
+      setSortedNotes(sortedOldestFirst);
+    }
+  }, [sortOldestToNewest]);
 
-  //     const data = await response.json();
-
-  //     if (data.success) {
-  //       setAllUserNotes(data.userNotes);
-  //     } else {
-  //       console.log("error fetcing data");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
+  // fetch all notes ========================================================================================
   useEffect(() => {
     if (user?._id) {
       getUserNotes();
     }
   }, [user]);
 
-  // console.log("user notes", allUserNotes);
+  // set sorted notes ======================================================================================
+  useEffect(() => {
+    // show newest to oldest
+    if (sortOldestToNewest) {
+      const sortedRecentFirst = [...allUserNotes].sort(
+        (a, b) => Number(b.creationDate) - Number(a.creationDate)
+      );
+      setSortedNotes(sortedRecentFirst);
+    } else {
+      const sortedOldestFirst = [...allUserNotes].sort(
+        (a, b) => Number(a.creationDate) - Number(b.creationDate)
+      );
+      setSortedNotes(sortedOldestFirst);
+    }
+  }, [allUserNotes]);
 
-  // ========================================
+  // search note =================================================================================================
+  useEffect(() => {
+    if (searchNoteText.length === 0) {
+      setFilteredNotes(sortedNotes);
+    }
+    if (searchNoteText.length > 0) {
+      const searchedNotes = sortedNotes.filter((note) =>
+        note.title.toLowerCase().includes(searchNoteText)
+      );
+      setFilteredNotes(searchedNotes);
+    }
+  }, [searchNoteText]);
+
+  console.log("user notes", allUserNotes);
+
+  const handleSorting = () => {
+    setSortOldestToNewest(!sortOldestToNewest);
+    if (sortOldestToNewest) {
+      toast.info("Showing Old to New");
+    } else {
+      toast.info("Showing New to Old");
+    }
+  };
+  // ================================================================================================
   return (
     <div className="w-full px-4 flex flex-col">
       <div className="flex gap-3">
         <SearchBar />
         {/* sort */}
-        <button className="flex items-center rounded-full px-4 py-2 bg-slate-100 gap-2 text-lg font-medium">
+        <button
+          onClick={handleSorting}
+          className="flex items-center rounded-full px-4 py-2 bg-slate-100 gap-2 text-lg font-medium"
+        >
           <BsSliders />
           <span>Sort</span>
         </button>
@@ -70,7 +115,9 @@ const MainContainer = () => {
               No notes
             </div>
           ) : (
-            <CardsContainer notes={allUserNotes} />
+            <CardsContainer
+              notes={searchNoteText.length === 0 ? sortedNotes : filteredNotes}
+            />
           )}
         </div>
         // <CardsContainer notes={allUserNotes} />

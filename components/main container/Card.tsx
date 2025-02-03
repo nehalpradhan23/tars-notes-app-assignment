@@ -80,7 +80,7 @@ const Card = ({ note }: { note: noteType }) => {
           onClick={(e) => {
             e.stopPropagation();
             navigator.clipboard.writeText(note?.noteContent);
-            toast("Note copied");
+            toast.info("Note copied");
           }}
           className="hover:bg-gray-200 rounded-full"
         >

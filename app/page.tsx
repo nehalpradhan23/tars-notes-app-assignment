@@ -19,7 +19,7 @@ export default function Home() {
   // =================================
   return (
     <div className="flex relative">
-      <ToastContainer />
+      <ToastContainer position="top-center" />
       {isListening && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-10 py-5 rounded-2xl text-4xl shadow-2xl shadow-black text-white bg-purple-600">
           Voice recording. Start speaking. Press stop to finish.

@@ -57,7 +57,7 @@ const NewNoteModal = () => {
       // console.log(response);
 
       if (response.data.success) {
-        toast("Note added");
+        toast.success("Note added");
         setNewNoteModalOpen(false);
         setNoteIsRecorded(false);
         getUserNotes();
@@ -91,9 +91,9 @@ const NewNoteModal = () => {
             <button
               onClick={() => {
                 if (isFavorite) {
-                  toast("Removed from favorite");
+                  toast.success("Removed from favorite");
                 } else {
-                  toast("Added to favorite");
+                  toast.success("Added to favorite");
                 }
                 setIsFavorite(!isFavorite);
               }}

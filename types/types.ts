@@ -37,6 +37,10 @@ export interface GlobalContextType {
     currentNoteToEdit: noteType | null;
     setCurrentNoteToEdit: React.Dispatch<React.SetStateAction<noteType | null>>;
   };
+  searchNoteObject: {
+    searchNoteText: string;
+    setSearchNoteText: React.Dispatch<React.SetStateAction<string>>;
+  };
 }
 
 export interface userType {
