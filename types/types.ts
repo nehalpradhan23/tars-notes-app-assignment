@@ -21,6 +21,14 @@ export interface GlobalContextType {
     allUserNotes: noteType[];
     setAllUserNotes: React.Dispatch<React.SetStateAction<noteType[] | []>>;
   };
+  deleteNoteModalObject: {
+    deleteNoteModalOpen: boolean;
+    setDeleteNoteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  noteToDeleteObject: {
+    noteToDelete: noteType | null;
+    setNoteToDelete: React.Dispatch<React.SetStateAction<noteType | null>>;
+  };
 }
 
 export interface userType {
@@ -30,6 +38,7 @@ export interface userType {
 }
 
 export interface noteType {
+  _id: string;
   userId: string;
   title: string;
   noteContent: string;

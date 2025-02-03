@@ -3,7 +3,6 @@ import { useGlobalContext } from "@/context/AppContext";
 import useFetchNotes from "@/hooks/useFetchNotes";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { CiStar } from "react-icons/ci";
 import { FaExpandAlt, FaStar } from "react-icons/fa";
 import { GrContract } from "react-icons/gr";
 import { MdClose } from "react-icons/md";

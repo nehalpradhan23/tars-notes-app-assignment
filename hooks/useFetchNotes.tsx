@@ -9,11 +9,10 @@ const useFetchNotes = () => {
     allUserNotesObject: { setAllUserNotes },
   } = useGlobalContext();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getUserNotes = async () => {
     try {
-      setLoading(true);
       const response = await fetch(`/api/notes?userId=${user?._id}`);
 
       const data = await response.json();

@@ -1,3 +1,5 @@
+import { useGlobalContext } from "@/context/AppContext";
+import useNoteDelete from "@/hooks/useNoteDelete";
 import { noteType } from "@/types/types";
 import React from "react";
 import { BiCopyAlt } from "react-icons/bi";
@@ -17,6 +19,20 @@ const Card = ({ note }: { note: noteType }) => {
       second: "numeric",
       hour12: true,
     });
+  };
+
+  const {
+    deleteNoteModalObject: { setDeleteNoteModalOpen },
+    noteToDeleteObject: { setNoteToDelete },
+  } = useGlobalContext();
+
+  const handleNoteDelete = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    note: noteType
+  ) => {
+    e.stopPropagation();
+    setNoteToDelete(note);
+    setDeleteNoteModalOpen(true);
   };
 
   // =========================================
@@ -54,7 +70,10 @@ const Card = ({ note }: { note: noteType }) => {
         <button className="hover:bg-gray-200 rounded-full">
           <MdDriveFileRenameOutline />
         </button>
-        <button className="hover:bg-gray-200 rounded-full">
+        <button
+          onClick={(e) => handleNoteDelete(e, note)}
+          className="hover:bg-gray-200 rounded-full"
+        >
           <MdDelete />
         </button>
       </div>

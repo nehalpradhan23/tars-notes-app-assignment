@@ -53,3 +53,36 @@ export async function GET(req: Request) {
     return NextResponse.json({ success: false, error });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { noteId } = await request.json();
+    console.log("noteid: ", noteId);
+
+    if (!noteId) {
+      return NextResponse.json({
+        success: false,
+        message: "Need id to delete",
+      });
+    }
+
+    await connectDB();
+    const noteToDelete = await SingleNote.findOneAndDelete({ _id: noteId });
+
+    if (!noteToDelete) {
+      return NextResponse.json({ success: false, message: "Note not found" });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Note deleted successfully",
+    });
+  } catch (error) {
+    console.log("error deleting note", error);
+    return NextResponse.json({
+      success: false,
+      error,
+      message: "Error deleting note",
+    });
+  }
+}

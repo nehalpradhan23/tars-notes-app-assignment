@@ -1,17 +1,16 @@
 "use client";
-import NewNoteModal from "@/components/main container/AddNote/NewNoteModal";
+import NewNoteModal from "@/components/modals/NewNoteModal";
 import MainContainer from "@/components/main container/MainContainer";
 import Sidebar from "@/components/Sidebar";
 import { useGlobalContext } from "@/context/AppContext";
-import axios from "axios";
-import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import DeleteNoteConfirmModal from "@/components/modals/DeleteNoteConfirmModal";
 
 export default function Home() {
   const {
     newNoteModalObject: { newNoteModalOpen },
     textRecordingObject: { isListening },
-    userObject: { user },
+    deleteNoteModalObject: { deleteNoteModalOpen },
   } = useGlobalContext();
   // console.log(user);
 
@@ -29,6 +28,7 @@ export default function Home() {
         <MainContainer />
       </div>
       {newNoteModalOpen && <NewNoteModal />}
+      {deleteNoteModalOpen && <DeleteNoteConfirmModal />}
     </div>
   );
 }
