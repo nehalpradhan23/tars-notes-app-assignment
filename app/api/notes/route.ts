@@ -91,7 +91,7 @@ export async function DELETE(request: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const { id, title, noteContent, isFavorite } = await req.json();
+    const { id, title, noteContent, isFavorite, images } = await req.json();
     await connectDB();
 
     const updateNote = await SingleNote.findByIdAndUpdate(
@@ -100,6 +100,7 @@ export async function PUT(req: Request) {
         title,
         noteContent,
         isFavorite,
+        images,
       }
     );
 

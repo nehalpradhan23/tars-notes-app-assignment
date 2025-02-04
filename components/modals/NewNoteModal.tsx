@@ -35,6 +35,8 @@ const NewNoteModal = () => {
     }
   }, [text]);
 
+  console.log("text: ", text);
+
   // ===============================================================
 
   const handleSaveNote = async () => {

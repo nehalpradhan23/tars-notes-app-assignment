@@ -48,7 +48,7 @@ const Card = ({ note }: { note: noteType }) => {
   return (
     <div
       onClick={() => handleEditNote(note)}
-      className="flex flex-col border hover:border-black rounded-2xl p-5 w-[350px] h-[400px] hover:bg-gray-50 cursor-pointer"
+      className="flex flex-col border hover:border-black/30 rounded-2xl p-5 w-[350px] h-[400px] hover:bg-gray-50 cursor-pointer"
     >
       <div className="flex flex-col flex-1 gap-3">
         {/* time ------------------- */}

@@ -82,7 +82,7 @@ const MainContainer = () => {
     }
   }, [searchNoteText]);
 
-  console.log("user notes", allUserNotes);
+  // console.log("user notes", allUserNotes);
 
   const handleSorting = () => {
     setSortOldestToNewest(!sortOldestToNewest);
