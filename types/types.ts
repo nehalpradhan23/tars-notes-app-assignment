@@ -41,6 +41,10 @@ export interface GlobalContextType {
     searchNoteText: string;
     setSearchNoteText: React.Dispatch<React.SetStateAction<string>>;
   };
+  sidebarMenuObject: {
+    sidebarMenu: number;
+    setSidebarMenu: React.Dispatch<React.SetStateAction<number>>;
+  };
 }
 
 export interface userType {

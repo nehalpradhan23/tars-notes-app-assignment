@@ -12,6 +12,7 @@ const Sidebar = () => {
 
   const {
     userObject: { user, setUser },
+    sidebarMenuObject: { sidebarMenu, setSidebarMenu },
   } = useGlobalContext();
 
   useEffect(() => {
@@ -39,11 +40,21 @@ const Sidebar = () => {
       </div>
       {/* ---------------------------------- */}
       <div className="*:flex *:items-center *:gap-2 *:text-xl flex-1 mt-5 flex flex-col gap-3 *:rounded-3xl *:p-2 *:font-semibold">
-        <div className=" bg-purple-200 text-purple-800">
+        <div
+          onClick={() => setSidebarMenu(0)}
+          className={`${
+            sidebarMenu === 0 ? "bg-purple-200 text-purple-800" : ""
+          } cursor-pointer`}
+        >
           <RiHome2Fill />
           <span>Home</span>
         </div>
-        <div className="">
+        <div
+          onClick={() => setSidebarMenu(1)}
+          className={`${
+            sidebarMenu === 1 ? "bg-purple-200 text-purple-800" : ""
+          } cursor-pointer`}
+        >
           <FaStar />
           <span>Favourites</span>
         </div>

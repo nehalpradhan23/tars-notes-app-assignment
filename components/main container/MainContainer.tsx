@@ -15,12 +15,14 @@ const MainContainer = () => {
     userObject: { user },
     allUserNotesObject: { allUserNotes },
     searchNoteObject: { searchNoteText },
+    sidebarMenuObject: { sidebarMenu },
   } = useGlobalContext();
 
   const { getUserNotes, loading } = useFetchNotes();
   const [sortOldestToNewest, setSortOldestToNewest] = useState(false);
   const [sortedNotes, setSortedNotes] = useState<noteType[] | []>([]);
   const [filteredNotes, setFilteredNotes] = useState<noteType[] | []>([]);
+  const [favoriteNotes, setFavoriteNotes] = useState<noteType[] | []>([]);
 
   // sort notes ==================================================================================================
   useEffect(() => {
@@ -45,7 +47,7 @@ const MainContainer = () => {
     }
   }, [user]);
 
-  // set sorted notes ======================================================================================
+  //  ======================================================================================
   useEffect(() => {
     // show newest to oldest
     if (sortOldestToNewest) {
@@ -59,7 +61,13 @@ const MainContainer = () => {
       );
       setSortedNotes(sortedOldestFirst);
     }
+    const filterFavoriteNotes = allUserNotes.filter(
+      (note) => note.isFavorite === true
+    );
+    setFavoriteNotes(filterFavoriteNotes);
   }, [allUserNotes]);
+
+  // console.log("fav: ====", favoriteNotes);
 
   // search note =================================================================================================
   useEffect(() => {
@@ -74,7 +82,7 @@ const MainContainer = () => {
     }
   }, [searchNoteText]);
 
-  console.log("user notes", allUserNotes);
+  // console.log("user notes", allUserNotes);
 
   const handleSorting = () => {
     setSortOldestToNewest(!sortOldestToNewest);
@@ -109,17 +117,34 @@ const MainContainer = () => {
           </div>
         </div>
       ) : (
-        <div className="overflow-y-auto flex flex-1">
-          {allUserNotes.length === 0 ? (
-            <div className="w-full flex flex-1 justify-center items-center text-6xl">
-              No notes
+        // show all notes or favorite notes ----------------------
+        <>
+          {sidebarMenu === 0 ? (
+            <div className="overflow-y-auto flex flex-1">
+              {allUserNotes.length === 0 ? (
+                <div className="w-full flex flex-1 justify-center items-center text-6xl">
+                  No notes
+                </div>
+              ) : (
+                <CardsContainer
+                  notes={
+                    searchNoteText.length === 0 ? sortedNotes : filteredNotes
+                  }
+                />
+              )}
             </div>
           ) : (
-            <CardsContainer
-              notes={searchNoteText.length === 0 ? sortedNotes : filteredNotes}
-            />
+            <div className="flex flex-1 overflow-y-auto">
+              {favoriteNotes.length === 0 ? (
+                <div className="w-full flex flex-1 justify-center items-center text-6xl">
+                  No favorites
+                </div>
+              ) : (
+                <CardsContainer notes={favoriteNotes} />
+              )}
+            </div>
           )}
-        </div>
+        </>
         // <CardsContainer notes={allUserNotes} />
       )}
       {/* ======================================= */}

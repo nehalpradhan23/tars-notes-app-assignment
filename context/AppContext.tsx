@@ -46,6 +46,10 @@ const ContextProvider = createContext<GlobalContextType>({
     searchNoteText: "",
     setSearchNoteText: () => {},
   },
+  sidebarMenuObject: {
+    sidebarMenu: 0,
+    setSidebarMenu: () => {},
+  },
 });
 
 export default function GlobalCOntextProvider({
@@ -60,6 +64,8 @@ export default function GlobalCOntextProvider({
   const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
   const [allUserNotes, setAllUserNotes] = useState<noteType[] | []>([]);
   const [searchNoteText, setSearchNoteText] = useState("");
+
+  const [sidebarMenu, setSidebarMenu] = useState(0);
 
   // edit note -----------------------------
   const [editNoteModalOpen, setEditNoteModalOpen] = useState(false);
@@ -107,6 +113,7 @@ export default function GlobalCOntextProvider({
         editNoteModalObject: { editNoteModalOpen, setEditNoteModalOpen },
         currentNoteToEditObject: { currentNoteToEdit, setCurrentNoteToEdit },
         searchNoteObject: { searchNoteText, setSearchNoteText },
+        sidebarMenuObject: { sidebarMenu, setSidebarMenu },
       }}
     >
       {children}
