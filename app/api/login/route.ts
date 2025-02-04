@@ -32,7 +32,8 @@ export async function POST(request: Request) {
       {
         email: userExists.email,
       },
-      process.env.SECRET_KEY as string,
+      "abcdefgh",
+      // process.env.SECRET_KEY as string,
       { expiresIn: "1d" }
     );
     // const token = jwt.sign(

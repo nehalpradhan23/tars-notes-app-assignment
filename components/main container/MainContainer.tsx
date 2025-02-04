@@ -108,8 +108,8 @@ const MainContainer = () => {
       </div>
       {/* cards ------------------------ */}
       {loading ? (
-        <div className="w-full flex flex-1 justify-center items-center text-6xl">
-          <div className="flex gap-4">
+        <div className="w-full flex flex-1 justify-center items-center text-3xl lg:text-6xl">
+          <div className="flex gap-4 items-center">
             <div className="animate-spin">
               <FaSpinner />
             </div>
@@ -122,7 +122,7 @@ const MainContainer = () => {
           {sidebarMenu === 0 ? (
             <div className="overflow-y-auto flex flex-1">
               {allUserNotes.length === 0 ? (
-                <div className="w-full flex flex-1 justify-center items-center text-6xl">
+                <div className="w-full flex flex-1 justify-center items-center text-3xl lg:text-6xl">
                   No notes
                 </div>
               ) : (
@@ -136,7 +136,7 @@ const MainContainer = () => {
           ) : (
             <div className="flex flex-1 overflow-y-auto">
               {favoriteNotes.length === 0 ? (
-                <div className="w-full flex flex-1 justify-center items-center text-6xl">
+                <div className="w-full flex flex-1 justify-center items-center text-3xl lg:text-6xl">
                   No favorites
                 </div>
               ) : (
