@@ -7,6 +7,7 @@ const SingleNoteSchema = new Schema({
   isFavorite: { type: Boolean, default: false },
   noteIsRecorded: { type: Boolean, default: false },
   creationDate: { type: String, required: true, default: "" },
+  images: { type: [String], default: [] },
 });
 
 const SingleNote =

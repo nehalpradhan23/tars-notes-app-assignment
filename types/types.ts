@@ -61,4 +61,5 @@ export interface noteType {
   isFavorite: boolean;
   noteIsRecorded: boolean;
   creationDate: string;
+  images: string[];
 }

@@ -10,6 +10,7 @@ export async function POST(req: Request) {
       noteContent,
       isFavorite,
       noteIsRecorded,
+      images,
       creationDate,
     } = await req.json();
     await connectDB();
@@ -20,6 +21,7 @@ export async function POST(req: Request) {
       noteContent,
       isFavorite,
       noteIsRecorded,
+      images,
       creationDate,
     });
 

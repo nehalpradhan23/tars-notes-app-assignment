@@ -19,7 +19,7 @@ const TextRecording = () => {
           {!isListening ? (
             <button
               onClick={startListening}
-              className="bg-red-500 text-white mr-4 p-4 rounded-full flex items-center gap-3"
+              className="bg-red-500 text-white mr-4 p-2 md:p-4 max-md:text-sm rounded-full flex items-center gap-3"
             >
               <GoDotFill />
               Start recording
@@ -28,7 +28,7 @@ const TextRecording = () => {
             <>
               <button
                 onClick={stopListening}
-                className="bg-green-600 text-white mr-4 p-4 rounded-full flex items-center gap-3"
+                className="bg-green-600 text-white mr-4 p-2 md:p-4 max-md:text-sm rounded-full flex items-center gap-3"
               >
                 <FaSquare />
                 Stop recording

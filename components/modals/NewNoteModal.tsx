@@ -2,8 +2,9 @@
 import { useGlobalContext } from "@/context/AppContext";
 import useFetchNotes from "@/hooks/useFetchNotes";
 import axios from "axios";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { FaExpandAlt, FaStar } from "react-icons/fa";
+import { FaExpandAlt, FaPlus, FaStar } from "react-icons/fa";
 import { GrContract } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -14,6 +15,7 @@ const NewNoteModal = () => {
   const [noteContent, setNoteContent] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState<string[] | []>([]);
 
   const { getUserNotes } = useFetchNotes();
 
@@ -52,6 +54,7 @@ const NewNoteModal = () => {
         noteContent,
         isFavorite,
         noteIsRecorded,
+        images,
         creationDate: Date.now(),
       });
       // console.log(response);
@@ -68,6 +71,41 @@ const NewNoteModal = () => {
       setLoading(false);
     }
   };
+
+  // ==========================================
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    console.log(file);
+    if (!file) return;
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "upload_preset_1");
+    data.append("cloud_name", "dslottvms");
+    toast.info("uploading image");
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dslottvms/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+
+    const uploadedImageUrl = await res.json();
+    console.log("image: ", uploadedImageUrl);
+
+    if (!uploadedImageUrl) {
+      toast.error("uploading error");
+      return;
+    }
+
+    setImages([...images, uploadedImageUrl.url]);
+    toast.success("Image uploaded successfully");
+  };
+
+  // console.log("images: ====", images);
+
   // ==========================================
   return (
     <div className="absolute z-10 w-full h-full bg-black/50 flex justify-center items-center">
@@ -135,11 +173,45 @@ const NewNoteModal = () => {
             name=""
             id=""
             placeholder="Add Note here"
-            className="rounded-2xl p-3 border bg-gray-100 h-[180px] outline-none"
+            className="rounded-2xl p-3 border bg-gray-100 h-[160px] outline-none"
             required
           />
-          <div className="">
-            <p>Add images</p>
+          {/* image upload ============================================== */}
+          <div className="flex flex-col gap-4">
+            <p className="text-xl font-bold">Add images:</p>
+            <div className="flex gap-4 items-center flex-wrap overflow-y-auto">
+              {/* show images ----------------------- */}
+              {images.length > 0 && (
+                <div className="flex gap-4">
+                  {images.map((image) => (
+                    <div className="h-[100px] bg-gray-200 w-[100px] rounded-2xl relative overflow-hidden border border-black/50">
+                      <Image
+                        src={image}
+                        key={image}
+                        alt=""
+                        fill
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* upload button */}
+              <label
+                htmlFor="uploadImg"
+                className="flex flex-col items-center justify-center h-[100px] w-[100px] bg-gray-100 rounded-2xl border border-black/40 cursor-pointer"
+              >
+                <FaPlus />
+                Image
+                <input
+                  id="uploadImg"
+                  hidden
+                  accept="image/*"
+                  type="file"
+                  onChange={handleImageUpload}
+                />
+              </label>
+            </div>
           </div>
         </div>
         {/* <div className="flex justify-end"> */}

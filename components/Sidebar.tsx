@@ -36,7 +36,7 @@ const Sidebar = () => {
     <div className="flex flex-col p-4 rounded-3xl border w-[350px]">
       <div className="flex items-center gap-2 text-xl font-bold">
         <Image src="/sidebar.png" alt="" width={40} height={40} />
-        <span>AI Notes</span>
+        <span className="max-md:hidden">AI Notes</span>
       </div>
       {/* ---------------------------------- */}
       <div className="*:flex *:items-center *:gap-2 *:text-xl flex-1 mt-5 flex flex-col gap-3 *:rounded-3xl *:p-2 *:font-semibold">
@@ -44,19 +44,19 @@ const Sidebar = () => {
           onClick={() => setSidebarMenu(0)}
           className={`${
             sidebarMenu === 0 ? "bg-purple-200 text-purple-800" : ""
-          } cursor-pointer`}
+          } cursor-pointer max-sm:w-fit`}
         >
           <RiHome2Fill />
-          <span>Home</span>
+          <span className="max-sm:hidden">Home</span>
         </div>
         <div
           onClick={() => setSidebarMenu(1)}
           className={`${
             sidebarMenu === 1 ? "bg-purple-200 text-purple-800" : ""
-          } cursor-pointer`}
+          } cursor-pointer max-sm:w-fit`}
         >
           <FaStar />
-          <span>Favourites</span>
+          <span className="max-sm:hidden">Favourites</span>
         </div>
       </div>
       {/* logout ---------------------- */}
@@ -71,12 +71,12 @@ const Sidebar = () => {
       )}
       <button
         onClick={handleShowLogout}
-        className="flex items-center justify-center gap-2"
+        className="flex items-center justify-center gap-2 max-md:flex-col"
       >
         <span className="px-2 py-0.5 bg-black rounded-full text-white">
           {user?.name[0].toUpperCase()}
         </span>
-        {user?.name}
+        <span className="max-md:text-xs">{user?.name}</span>
       </button>
     </div>
   );

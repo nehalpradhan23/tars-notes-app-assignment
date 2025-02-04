@@ -84,19 +84,19 @@ export default function GlobalCOntextProvider({
   const router = useRouter();
 
   // authenticate ---------------------------
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    // const currentUser = localStorage.getItem("currentUser");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   // const currentUser = localStorage.getItem("currentUser");
 
-    if (token) {
-      setIsAuthUser(true);
-      // setUser(currentUser)
-      router.push("/");
-    } else {
-      setIsAuthUser(false);
-      router.push("/login");
-    }
-  }, []);
+  //   if (token) {
+  //     setIsAuthUser(true);
+  //     // setUser(currentUser)
+  //     router.push("/");
+  //   } else {
+  //     setIsAuthUser(false);
+  //     router.push("/login");
+  //   }
+  // }, []);
 
   // =====================================================
   return (

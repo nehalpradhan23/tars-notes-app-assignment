@@ -6,6 +6,8 @@ import { useGlobalContext } from "@/context/AppContext";
 import { ToastContainer } from "react-toastify";
 import DeleteNoteConfirmModal from "@/components/modals/DeleteNoteConfirmModal";
 import EditNoteModal from "@/components/modals/EditNoteModal";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const {
@@ -13,8 +15,30 @@ export default function Home() {
     textRecordingObject: { isListening },
     deleteNoteModalObject: { deleteNoteModalOpen },
     editNoteModalObject: { editNoteModalOpen },
+    userObject: { setIsAuthUser },
   } = useGlobalContext();
+
+  const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
   // console.log(user);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // const currentUser = localStorage.getItem("currentUser");
+
+    if (token) {
+      setIsAuthUser(true);
+      // setUser(currentUser)
+      // router.push("/");
+      setLoading(false);
+    } else {
+      setIsAuthUser(false);
+      router.push("/login");
+    }
+  }, []);
+
+  if (loading) return;
 
   // =================================
   return (
