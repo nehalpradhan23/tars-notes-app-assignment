@@ -4,7 +4,7 @@ import useFetchNotes from "@/hooks/useFetchNotes";
 import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { FaExpandAlt, FaPlus, FaStar } from "react-icons/fa";
+import { FaExpandAlt, FaPlay, FaPlus, FaStar } from "react-icons/fa";
 import { GrContract } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -34,8 +34,6 @@ const NewNoteModal = () => {
       setNoteContent(text);
     }
   }, [text]);
-
-  console.log("text: ", text);
 
   // ===============================================================
 
@@ -77,7 +75,7 @@ const NewNoteModal = () => {
   // ==========================================
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log(file);
+
     if (!file) return;
 
     const data = new FormData();
@@ -95,7 +93,6 @@ const NewNoteModal = () => {
     );
 
     const uploadedImageUrl = await res.json();
-    console.log("image: ", uploadedImageUrl);
 
     if (!uploadedImageUrl) {
       toast.error("uploading error");
@@ -107,6 +104,13 @@ const NewNoteModal = () => {
   };
 
   // console.log("images: ====", images);
+
+  // ================================================
+  const handleTextToSpeechPlay = () => {
+    const text = noteContent;
+    const value = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(value);
+  };
 
   // ==========================================
   return (
@@ -169,13 +173,22 @@ const NewNoteModal = () => {
             required
           />
           <p className="text-xl font-bold">Add note:</p>
+          {noteIsRecorded && (
+            <button
+              onClick={handleTextToSpeechPlay}
+              className="w-fit bg-gray-200 rounded-2xl px-4 py-1 flex items-center gap-2"
+            >
+              <FaPlay />
+              Play
+            </button>
+          )}
           <textarea
             onChange={(e) => setNoteContent(e.target.value)}
             value={noteContent}
             name=""
             id=""
             placeholder="Add Note here"
-            className="rounded-2xl p-3 border bg-gray-100 h-[160px] outline-none"
+            className="rounded-2xl p-3 border bg-gray-100 h-[150px] outline-none"
             required
           />
           {/* image upload ============================================== */}
@@ -220,7 +233,7 @@ const NewNoteModal = () => {
         <button
           disabled={loading}
           onClick={() => handleSaveNote()}
-          className="px-4 py-3 rounded-full bg-purple-700 hover:bg-purple-900 font-bold text-white"
+          className="px-4 py-3 mt-4 rounded-full bg-purple-700 hover:bg-purple-900 font-bold text-white"
         >
           {loading ? <span>Saving...</span> : <span>Save note</span>}
         </button>

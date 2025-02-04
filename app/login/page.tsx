@@ -47,7 +47,7 @@ const LoginPage = () => {
       });
 
       // const data = response
-      console.log("resp ----------", response.data);
+      // console.log("resp ----------", response.data);
 
       if (response.data.success === true) {
         setIsAuthUser(true);

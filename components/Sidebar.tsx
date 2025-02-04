@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { RiHome2Fill } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const [showLogout, setShowLogout] = useState(false);
@@ -25,6 +26,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
+    toast.info("Logging out");
     localStorage.removeItem("token");
     localStorage.removeItem("currentUser");
     router.push("/login");

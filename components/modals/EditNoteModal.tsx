@@ -5,7 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { BiCopyAlt } from "react-icons/bi";
-import { FaExpandAlt, FaPlus, FaStar } from "react-icons/fa";
+import { FaExpandAlt, FaPlay, FaPlus, FaStar } from "react-icons/fa";
 import { GrContract } from "react-icons/gr";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -44,8 +44,6 @@ const EditNoteModal = () => {
     setImages(currentNoteToEdit?.images!);
   }, [currentNoteToEdit]);
 
-  console.log(currentNoteToEdit);
-
   // ===============================================================
 
   const handleSaveNote = async () => {
@@ -83,7 +81,6 @@ const EditNoteModal = () => {
   // ==========================================
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log(file);
     if (!file) return;
 
     const data = new FormData();
@@ -101,7 +98,6 @@ const EditNoteModal = () => {
     );
 
     const uploadedImageUrl = await res.json();
-    console.log("image: ", uploadedImageUrl);
 
     if (!uploadedImageUrl) {
       toast.error("uploading error");
@@ -112,6 +108,12 @@ const EditNoteModal = () => {
     toast.success("Image uploaded successfully");
   };
 
+  // ================================================
+  const handleTextToSpeechPlay = () => {
+    const text = noteContent;
+    const value = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(value);
+  };
   // ==========================================
   return (
     <div className="absolute z-10 w-full h-full bg-black/50 flex justify-center items-center">
@@ -162,7 +164,7 @@ const EditNoteModal = () => {
           </div>
         </div>
         {/* title -------------------------------------------- */}
-        <div className="flex flex-col h-full mt-4 gap-4">
+        <div className="flex flex-col h-full mt-4 gap-4 overflow-y-scroll">
           <p className="text-xl font-bold">Title:</p>
           <input
             onChange={(e) => setNoteTitle(e.target.value)}
@@ -172,6 +174,7 @@ const EditNoteModal = () => {
             className="p-3 border bg-gray-100 rounded-2xl outline-none"
             required
           />
+          {/* note ===================================================== */}
           <div className="flex justify-between items-center">
             <p className="text-xl font-bold">Note:</p>
             <button
@@ -185,13 +188,22 @@ const EditNoteModal = () => {
               <BiCopyAlt />
             </button>
           </div>
+          {currentNoteToEdit?.noteIsRecorded && (
+            <button
+              onClick={handleTextToSpeechPlay}
+              className="w-fit bg-gray-200 rounded-2xl px-4 py-1 flex items-center gap-2"
+            >
+              <FaPlay />
+              Play
+            </button>
+          )}
           <textarea
             onChange={(e) => setNoteContent(e.target.value)}
             value={noteContent}
             name=""
             id=""
             placeholder="Add Note here"
-            className="rounded-2xl p-3 border bg-gray-100 h-[180px] outline-none"
+            className="rounded-2xl p-3 border bg-gray-100 h-[150px] outline-none"
             required
           />
           {/* image upload ============================================== */}
@@ -236,7 +248,7 @@ const EditNoteModal = () => {
         <button
           disabled={loading}
           onClick={() => handleSaveNote()}
-          className="px-4 py-3 rounded-full bg-purple-700 hover:bg-purple-900 font-bold text-white"
+          className="px-4 py-3 mt-4 rounded-full bg-purple-700 hover:bg-purple-900 font-bold text-white"
         >
           {loading ? <span>Updating...</span> : <span>Update note</span>}
         </button>
