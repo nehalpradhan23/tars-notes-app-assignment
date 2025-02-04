@@ -3,7 +3,7 @@ import useNoteDelete from "@/hooks/useNoteDelete";
 import { noteType } from "@/types/types";
 import React from "react";
 import { BiCopyAlt } from "react-icons/bi";
-import { FaPlay } from "react-icons/fa";
+import { FaImage, FaPlay } from "react-icons/fa";
 import { MdDelete, MdDriveFileRenameOutline } from "react-icons/md";
 import { RiText } from "react-icons/ri";
 import { toast } from "react-toastify";
@@ -72,7 +72,12 @@ const Card = ({ note }: { note: noteType }) => {
         {/* title --------------------- */}
         <span className="text-xl font-bold">{note.title}</span>
         <div className="text-gray-600 text-lg">{note.noteContent}</div>
-        <span>image</span>
+        {note.images.length > 0 && (
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-gray-200 w-fit font-bold text-sm">
+            <FaImage />
+            {note.images.length} Image
+          </div>
+        )}
       </div>
       {/* buttons ------------------------- */}
       <div className="flex items-end justify-end *:text-2xl gap-1 *:text-slate-400 *:p-2">
